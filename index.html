@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bloom Note</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar navbar-expand-lg bloom-navbar sticky-top">
+    <div class="container">
+      <a class="navbar-brand bloom-brand" href="#">
+        <span class="brand-icon">✿</span> Bloom Note
+      </a>
+      <div class="d-flex align-items-center gap-3">
+        <span class="bloom-counter-label">in your bouquet</span>
+        <span class="bloom-badge" id="flowerCount">0</span>
+        <button class="btn btn-sm bloom-clear-btn" id="clearBouquet" title="Clear bouquet">✕ Clear</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO TAGLINE -->
+  <div class="bloom-hero">
+    <p class="bloom-tagline">Arrange a bouquet. Leave a note. Share something beautiful.</p>
+  </div>
+
+  <div class="container bloom-main">
+
+    <!-- ── FLOWER SELECTION ── -->
+    <section class="mb-5">
+      <h2 class="section-heading">Choose your flowers</h2>
+      <div class="row g-3 justify-content-center" id="flowerGrid">
+
+        <div class="col-6 col-sm-4 col-md-3 col-lg-2">
+          <div class="flower-card" data-flower="rose" data-emoji="🌹" data-color="#e8a0b4">
+            <div class="flower-card-icon">🌹</div>
+            <div class="flower-card-name">Rose</div>
+            <div class="flower-card-sub">classic romance</div>
+            <button class="flower-add-btn">+ Add</button>
+          </div>
+        </div>
+
+        <div class="col-6 col-sm-4 col-md-3 col-lg-2">
+          <div class="flower-card" data-flower="tulip" data-emoji="🌷" data-color="#f2b5c8">
+            <div class="flower-card-icon">🌷</div>
+            <div class="flower-card-name">Tulip</div>
+            <div class="flower-card-sub">graceful charm</div>
+            <button class="flower-add-btn">+ Add</button>
+          </div>
+        </div>
+
+        <div class="col-6 col-sm-4 col-md-3 col-lg-2">
+          <div class="flower-card" data-flower="sunflower" data-emoji="🌻" data-color="#f6d97a">
+            <div class="flower-card-icon">🌻</div>
+            <div class="flower-card-name">Sunflower</div>
+            <div class="flower-card-sub">warm joy</div>
+            <button class="flower-add-btn">+ Add</button>
+          </div>
+        </div>
+
+        <div class="col-6 col-sm-4 col-md-3 col-lg-2">
+          <div class="flower-card" data-flower="cherry" data-emoji="🌸" data-color="#f9c4d4">
+            <div class="flower-card-icon">🌸</div>
+            <div class="flower-card-name">Cherry Blossom</div>
+            <div class="flower-card-sub">fleeting beauty</div>
+            <button class="flower-add-btn">+ Add</button>
+          </div>
+        </div>
+
+        <div class="col-6 col-sm-4 col-md-3 col-lg-2">
+          <div class="flower-card" data-flower="daisy" data-emoji="🌼" data-color="#fffacd">
+            <div class="flower-card-icon">🌼</div>
+            <div class="flower-card-name">Daisy</div>
+            <div class="flower-card-sub">gentle whimsy</div>
+            <button class="flower-add-btn">+ Add</button>
+          </div>
+        </div>
+
+        <div class="col-6 col-sm-4 col-md-3 col-lg-2">
+          <div class="flower-card" data-flower="hibiscus" data-emoji="🌺" data-color="#f4a0a0">
+            <div class="flower-card-icon">🌺</div>
+            <div class="flower-card-name">Hibiscus</div>
+            <div class="flower-card-sub">vivid passion</div>
+            <button class="flower-add-btn">+ Add</button>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ── BOUQUET DISPLAY ── -->
+    <section class="mb-4">
+      <h2 class="section-heading">Your bouquet</h2>
+
+      <div class="bouquet-wrapper">
+
+        <!-- Vase Selector -->
+        <div class="vase-selector mb-3">
+          <span class="vase-label">Vase style:</span>
+          <button class="vase-btn active" data-vase="glass">Glass</button>
+          <button class="vase-btn" data-vase="ceramic">Ceramic</button>
+        </div>
+
+        <!-- Bouquet Stage -->
+        <div class="bouquet-stage" id="bouquetStage">
+          <div class="bouquet-flowers" id="bouquetFlowers">
+            <!-- Empty state -->
+            <div class="bouquet-empty" id="bouquetEmpty">
+              <span class="empty-icon">✿</span>
+              <p>Add flowers to begin your bouquet</p>
+            </div>
+          </div>
+          <!-- Vase SVGs rendered here -->
+          <div class="vase-container" id="vaseContainer">
+            <!-- Glass vase (default) -->
+            <svg id="vase-glass" class="vase-svg" viewBox="0 0 200 220" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="glassGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" style="stop-color:#d4eaf7;stop-opacity:0.9"/>
+                  <stop offset="50%" style="stop-color:#eef6fc;stop-opacity:0.7"/>
+                  <stop offset="100%" style="stop-color:#b8d8ed;stop-opacity:0.9"/>
+                </linearGradient>
+                <linearGradient id="glassShine" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" style="stop-color:white;stop-opacity:0"/>
+                  <stop offset="30%" style="stop-color:white;stop-opacity:0.5"/>
+                  <stop offset="50%" style="stop-color:white;stop-opacity:0"/>
+                </linearGradient>
+              </defs>
+              <!-- Neck -->
+              <path d="M82,10 Q82,0 100,0 Q118,0 118,10 L122,60 Q140,65 150,90 L150,190 Q150,210 100,210 Q50,210 50,190 L50,90 Q60,65 78,60 Z" fill="url(#glassGrad)" stroke="#a8cee0" stroke-width="1.5"/>
+              <!-- Shine -->
+              <path d="M88,12 L90,60 L88,180" stroke="white" stroke-width="6" stroke-linecap="round" opacity="0.6"/>
+              <!-- Water line -->
+              <ellipse cx="100" cy="130" rx="48" ry="5" fill="#a8d4e8" opacity="0.35"/>
+              <!-- Rim highlight -->
+              <ellipse cx="100" cy="10" rx="18" ry="5" fill="white" opacity="0.4"/>
+            </svg>
+
+            <!-- Ceramic vase -->
+            <svg id="vase-ceramic" class="vase-svg d-none" viewBox="0 0 200 220" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="ceramicGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" style="stop-color:#e8c5b5;stop-opacity:1"/>
+                  <stop offset="60%" style="stop-color:#f0d8ca;stop-opacity:1"/>
+                  <stop offset="100%" style="stop-color:#d4a898;stop-opacity:1"/>
+                </linearGradient>
+              </defs>
+              <!-- Body -->
+              <path d="M85,5 Q85,-2 100,-2 Q115,-2 115,5 L118,50 Q145,60 155,100 Q160,140 155,180 Q150,215 100,215 Q50,215 45,180 Q40,140 45,100 Q55,60 82,50 Z" fill="url(#ceramicGrad)" stroke="#c49585" stroke-width="1.5"/>
+              <!-- Decorative band -->
+              <path d="M60,110 Q100,118 140,110" stroke="#c49585" stroke-width="2" fill="none" opacity="0.6"/>
+              <path d="M58,118 Q100,126 142,118" stroke="#c49585" stroke-width="1" fill="none" opacity="0.4"/>
+              <!-- Dots pattern -->
+              <circle cx="80" cy="145" r="3" fill="#c49585" opacity="0.5"/>
+              <circle cx="100" cy="148" r="3" fill="#c49585" opacity="0.5"/>
+              <circle cx="120" cy="145" r="3" fill="#c49585" opacity="0.5"/>
+              <!-- Shine -->
+              <path d="M88,8 L86,50 L84,190" stroke="white" stroke-width="5" stroke-linecap="round" opacity="0.3"/>
+            </svg>
+          </div>
+
+          <!-- Stem lines -->
+          <div class="stem-lines" id="stemLines"></div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ── NOTE SECTION ── -->
+    <section class="mb-4">
+      <h2 class="section-heading">Your note</h2>
+      <div class="note-wrapper">
+        <textarea
+          id="bloomNote"
+          class="bloom-textarea"
+          rows="4"
+          placeholder="Write something meaningful..."
+          maxlength="400"
+        ></textarea>
+        <div class="note-char-count"><span id="charCount">0</span> / 400</div>
+        <div class="note-display" id="noteDisplay"></div>
+      </div>
+    </section>
+
+    <!-- ── SHARE ── -->
+    <section class="mb-5 text-center">
+      <button class="btn bloom-share-btn" id="shareBtn">
+        ✿ Share Bloom
+      </button>
+      <div class="share-result mt-3" id="shareResult" style="display:none;">
+        <div class="share-link-box">
+          <input type="text" id="shareLink" class="share-link-input" readonly />
+          <button class="copy-btn" id="copyBtn">Copy</button>
+        </div>
+        <p class="share-hint">Anyone with this link can view your bouquet ✿</p>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="bloom-footer">
+    <p>made with ✿ bloom note</p>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

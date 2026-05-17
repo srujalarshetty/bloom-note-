@@ -99,4 +99,4 @@ This project focuses on combining **aesthetic design + interactive UI**, creatin
 
 ## 📌 Author
 
-Created by *[Your Name]*
+Created by *[Srujala Shetty]*
